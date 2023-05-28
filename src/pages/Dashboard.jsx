@@ -1,4 +1,4 @@
-import LogoutBtn from "../components/auth/logoutBtn"
+import LogoutBtn from "../components/auth/LogoutBtn"
 import { Box, AppBar, Toolbar, Typography  } from "@mui/material"
 
 function Dashboard() {
