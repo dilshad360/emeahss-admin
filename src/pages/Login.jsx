@@ -4,7 +4,7 @@ import background from "../assets/background.jpg";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useNavigate } from "react-router-dom";
 import Loader from "../components/Loader";
-import LoginBtn from "../components/auth/loginBtn";
+import LoginBtn from "../components/auth/LoginBtn";
 
 function Login() {
   const navigate = useNavigate();
@@ -54,7 +54,7 @@ function Login() {
               Admin Panel
             </Typography>
           </div>
-          <LoginBtn />
+            <LoginBtn/>
         </Paper>
       </Box>
     </div>
