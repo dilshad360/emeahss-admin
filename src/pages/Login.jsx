@@ -1,10 +1,10 @@
 import { Typography, Box, Paper } from "@mui/material";
 import logo from "../assets/emea_logo.jpeg";
 import background from "../assets/background.jpg";
-import LoginBtn from "../components/auth/loginBtn";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useNavigate } from "react-router-dom";
 import Loader from "../components/Loader";
+import LoginBtn from "../components/auth/loginBtn";
 
 function Login() {
   const navigate = useNavigate();
