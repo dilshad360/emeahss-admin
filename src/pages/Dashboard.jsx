@@ -1,27 +1,57 @@
-import LogoutBtn from "../components/auth/LogoutBtn"
-import { Box, AppBar, Toolbar, Typography  } from "@mui/material"
+import { useState } from "react";
+import {
+  Box,
+  Paper,
+  TextField,
+  Button,
+} from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
+import NavBar from "../components/NavBar";
 
 function Dashboard() {
+  const [applicationNo, setApplicationNo] = useState("");
+  const [dateOfBirth, setDateOfBirth] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    alert(`Application No: ${applicationNo}\nDate of Birth: ${dateOfBirth}`);
+  };
 
   return (
-    <div>
-      <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="fixed">
-        <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Dashboard
-          </Typography>
-          <LogoutBtn/>
-        </Toolbar>
-      </AppBar>
-    </Box>
-    <div className="h-screen flex justify-center items-center text-7xl">
-  
-    <iframe src="https://gifer.com/embed/Mgz" height={400} width={400} ></iframe>
-
-    </div>
-    </div>
-  )
+    <>
+      <NavBar/>
+      <div className="h-screen flex flex-col items-center bg-slate-100">
+        <Box className="w-11/12 my-5 md:w-5/6">
+          <Paper className="p-4">
+            <h3 className="font-bold text-2xl mb-4">Add Management Nominee</h3>
+            <form onSubmit={handleSubmit} className="flex flex-col gap-3 md:flex-row">
+              <TextField
+                label="Application Number"
+                value={applicationNo}
+                onChange={(e) => setApplicationNo(e.target.value)}
+                required
+                fullWidth
+              />
+              <TextField
+                label="Date of Birth"
+                type="date"
+                value={dateOfBirth}
+                onChange={(e) => setDateOfBirth(e.target.value)}
+                required
+                fullWidth
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+              <Button type="submit" variant="contained" color="primary">
+                <SearchIcon />
+              </Button>
+            </form>
+          </Paper>
+        </Box>
+      </div>
+    </>
+  );
 }
 
-export default Dashboard
+export default Dashboard;

@@ -2,17 +2,17 @@ import { Typography, Box, Paper } from "@mui/material";
 import logo from "../assets/emea_logo.jpeg";
 import background from "../assets/background.jpg";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import Loader from "../components/Loader";
-import LoginBtn from "../components/auth/LoginBtn";
+import LoginBtn from "../components/auth/loginBtn";
 
 function Login() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const { isAuthenticated, isLoading } = useAuth0();
 
   if (isAuthenticated) {
-    navigate("/dashboard");
+    return <Navigate to="/dashboard" replace={true} />
   }
 
   if (isLoading) {
