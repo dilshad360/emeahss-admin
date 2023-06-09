@@ -7,7 +7,6 @@ import Loader from "../components/Loader";
 import LoginBtn from "../components/auth/LoginBtn";
 
 function Login() {
-  // const navigate = useNavigate();
 
   const { isAuthenticated, isLoading } = useAuth0();
 
