@@ -51,10 +51,19 @@ function Login() {
                 color: "darkblue",
               }}
             >
-              Admin Panel
+              Management Admin Panel
             </Typography>
+            <LoginBtn />
+            <Typography
+              variant="h6"
+              style={{
+                color: "darkblue",
+              }}
+            >
+              Community Admin Panel
+            </Typography>
+            <LoginBtn />
           </div>
-            <LoginBtn/>
         </Paper>
       </Box>
     </div>
