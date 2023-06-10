@@ -1,6 +1,17 @@
 import { useState } from "react";
-import { Box, Paper, TextField, Button, Typography } from "@mui/material";
+import {
+  Box,
+  Paper,
+  TextField,
+  Button,
+  Typography,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel
+} from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import CheckIcon from "@mui/icons-material/Check";
 import NavBar from "../components/NavBar";
 import axios from "axios";
 
@@ -27,21 +38,52 @@ function Dashboard() {
         <Box className="w-11/12 my-5 md:w-5/6">
           <Paper className="p-4">
             <h3 className="font-bold text-2xl mb-4">Add Management Nominee</h3>
-            <form
-              onSubmit={handleSubmit}
-              className="flex flex-col gap-3 md:flex-row"
-            >
-              <TextField
-                label="Application Number"
-                value={applicationNo}
-                onChange={(e) => setApplicationNo(e.target.value)}
-                required
-                fullWidth
-              />
-              <Button type="submit" variant="contained" color="primary">
-                <SearchIcon />
-              </Button>
-            </form>
+            <div className="flex gap-3">
+              {/* Student Search Form */}
+
+              <form
+                onSubmit={handleSubmit}
+                className="flex flex-col gap-3 md:flex-row w-full"
+              >
+                <TextField
+                  label="Application No."
+                  value={applicationNo}
+                  onChange={(e) => setApplicationNo(e.target.value)}
+                  required
+                  fullWidth
+                />
+                <Button type="submit" variant="contained" color="primary">
+                  <SearchIcon />
+                </Button>
+              </form>
+
+              {/* Nominee Add Form */}
+
+              <form className="flex flex-col gap-3 md:flex-row w-full">
+              <FormControl fullWidth>
+        <InputLabel >Nominee</InputLabel>
+        <Select
+          disabled
+          // value={nominee}
+          label="Nominee"
+          // onChange={handleChange}
+        >
+          <MenuItem value={10}>Ten</MenuItem>
+          <MenuItem value={20}>Twenty</MenuItem>
+          <MenuItem value={30}>Thirty</MenuItem>
+        </Select>
+      </FormControl>
+                <Button
+                  type="submit"
+                  disabled
+                  variant="contained"
+                  color="primary"
+                >
+                  <CheckIcon />
+                </Button>
+              </form>
+            </div>
+
             {studentDetails && (
               <>
                 <Typography
