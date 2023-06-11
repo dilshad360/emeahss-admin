@@ -13,28 +13,48 @@ import NavBar from "../components/NavBar";
 import axios from "axios";
 import { nomineesOptions } from "../const/options";
 import StudentDetails from "../components/StudentDetails";
+import WarningAlert from "../components/alerts/WarningAlert";
 
 function Dashboard() {
   const [applicationNo, setApplicationNo] = useState("");
   const [studentDetails, setStudentDetails] = useState({});
   const [selectedNominee, setSelectedNominee] = useState("");
 
+  const [openWarningAlert, setOpenWarningAlert] = useState(false);
+
   const handleSearch = async (e) => {
-    e.preventDefault();
-    const response = await axios.get(
-      `${
-        import.meta.env.VITE_MANAGEMENT_QUOTA_LINK
-      }/search?AppNo=${applicationNo}`
-    );
-    console.log(response.data);
-    setStudentDetails(response.data);
-    setSelectedNominee("");  
+    try {
+      e.preventDefault();
+      const response = await axios.get(
+        `${
+          import.meta.env.VITE_MANAGEMENT_QUOTA_LINK
+        }/search?AppNo=${applicationNo}`
+      );
+      setSelectedNominee("");
+      console.log(response.data);
+      if (response.data.length > 0) {
+        setStudentDetails(response.data);
+      } else {
+        setStudentDetails({});
+        setOpenWarningAlert(true);
+      }
+    } catch (error) {
+      alert(error);
+      console.error("An error occurred:", error);
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     alert(selectedNominee);
     console.log(selectedNominee);
+  };
+
+  const handleCloseWarningAlert = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenWarningAlert(false);
   };
 
   return (
@@ -94,9 +114,14 @@ function Dashboard() {
               </form>
             </div>
           </Paper>
-          {!!studentDetails.length &&  <StudentDetails data={studentDetails} />}
+          {!!studentDetails.length && <StudentDetails data={studentDetails} />}
         </Box>
       </div>
+      <WarningAlert
+        open={openWarningAlert}
+        handleClose={handleCloseWarningAlert}
+        message="Application not found!"
+      />
     </>
   );
 }
