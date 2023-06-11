@@ -4,31 +4,37 @@ import {
   Paper,
   TextField,
   Button,
-  Typography,
-  Select,
-  MenuItem,
+  Autocomplete,
   FormControl,
-  InputLabel
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import CheckIcon from "@mui/icons-material/Check";
 import NavBar from "../components/NavBar";
 import axios from "axios";
+import { nomineesOptions } from "../const/options";
+import StudentDetails from "../components/StudentDetails";
 
 function Dashboard() {
   const [applicationNo, setApplicationNo] = useState("");
   const [studentDetails, setStudentDetails] = useState({});
+  const [selectedNominee, setSelectedNominee] = useState("");
 
-  const handleSubmit = async (e) => {
+  const handleSearch = async (e) => {
     e.preventDefault();
     const response = await axios.get(
       `${
         import.meta.env.VITE_MANAGEMENT_QUOTA_LINK
       }/search?AppNo=${applicationNo}`
     );
-    console.log(response.data[0]);
-    setStudentDetails(response.data[0]);
-    alert(`Student Details:${studentDetails}`);
+    console.log(response.data);
+    setStudentDetails(response.data);
+    setSelectedNominee("");  
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    alert(selectedNominee);
+    console.log(selectedNominee);
   };
 
   return (
@@ -42,7 +48,7 @@ function Dashboard() {
               {/* Student Search Form */}
 
               <form
-                onSubmit={handleSubmit}
+                onSubmit={handleSearch}
                 className="flex flex-col gap-3 md:flex-row w-full"
               >
                 <TextField
@@ -59,52 +65,36 @@ function Dashboard() {
 
               {/* Nominee Add Form */}
 
-              <form className="flex flex-col gap-3 md:flex-row w-full">
-              <FormControl fullWidth>
-        <InputLabel >Nominee</InputLabel>
-        <Select
-          disabled
-          // value={nominee}
-          label="Nominee"
-          // onChange={handleChange}
-        >
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
-        </Select>
-      </FormControl>
+              <form
+                className="flex flex-col gap-3 md:flex-row w-full"
+                onSubmit={handleSubmit}
+              >
+                <FormControl fullWidth>
+                  <Autocomplete
+                    disabled={!studentDetails.length}
+                    freeSolo
+                    inputValue={selectedNominee}
+                    onInputChange={(event, newInputValue) => {
+                      setSelectedNominee(newInputValue);
+                    }}
+                    options={nomineesOptions.map((option) => option)}
+                    renderInput={(params) => (
+                      <TextField {...params} label="Nominee" />
+                    )}
+                  />
+                </FormControl>
                 <Button
                   type="submit"
-                  disabled
+                  disabled={!studentDetails.length}
                   variant="contained"
-                  color="primary"
+                  color="success"
                 >
                   <CheckIcon />
                 </Button>
               </form>
             </div>
-
-            {studentDetails && (
-              <>
-                <Typography
-                  variant="h6"
-                  style={{
-                    color: "darkblue",
-                  }}
-                >
-                  {studentDetails.AppNo}
-                </Typography>
-                <Typography
-                  variant="h6"
-                  style={{
-                    color: "darkblue",
-                  }}
-                >
-                  {studentDetails.Name}
-                </Typography>
-              </>
-            )}
           </Paper>
+          {!!studentDetails.length &&  <StudentDetails data={studentDetails} />}
         </Box>
       </div>
     </>
