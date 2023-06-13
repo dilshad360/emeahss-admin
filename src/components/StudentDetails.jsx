@@ -40,6 +40,16 @@ function StudentDetails({ data }) {
                 {student.Nominee}
               </TableCell>
             )}
+            {student.Payment && (
+              <TableCell
+                sx={{
+                  color: "green",
+                }}
+              >
+                <b>Payment: </b>
+                {student.Payment}
+              </TableCell>
+            )}
           </TableRow>
 
           <TableRow>

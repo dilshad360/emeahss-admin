@@ -32,6 +32,12 @@ function Dashboard() {
     try {
       e.preventDefault();
 
+      // To prevent the removel of AppNo formula from sheet
+      if(applicationNo === 'M0001' || applicationNo === 'C0001' ){
+        alert("Access Denied")
+        return
+      }
+
       // check if management quota is selected or not
       const quotaLink = isManagementQuota
         ? import.meta.env.VITE_MANAGEMENT_QUOTA_LINK
@@ -40,6 +46,7 @@ function Dashboard() {
         `${quotaLink}/search?AppNo=${applicationNo}`
       );
       setSelectedNominee("");
+      setPaymentStatus("");
       console.log(response.data);
 
       if (response.data.length > 0) {
@@ -69,13 +76,16 @@ function Dashboard() {
     const paymentUpdated = {
       ...studentDetails[0],
       Payment: paymentStatus,
-      AppNo: ""
-    }
+      AppNo: "",
+    };
+
     console.log(paymentStatus);
     try {
       if (isManagementQuota) {
         const response = await axios.patch(
-          `${import.meta.env.VITE_MANAGEMENT_QUOTA_LINK}/AppNo/${applicationNo}`,
+          `${
+            import.meta.env.VITE_MANAGEMENT_QUOTA_LINK
+          }/AppNo/${applicationNo}`,
           updatedStudent,
           {
             headers: {
@@ -103,9 +113,7 @@ function Dashboard() {
     } catch (error) {
       console.error("An error occurred:", error);
     }
-
-
-  }
+  };
 
   /*
   const handleSubmit = async (e) => {
@@ -138,7 +146,10 @@ function Dashboard() {
                 color="primary"
                 value={isManagementQuota}
                 exclusive
-                onChange={() => setIsManagementQuota((prev) => !prev)}
+                onChange={() => {
+                  setIsManagementQuota((prev) => !prev);
+                  setStudentDetails({});
+                }}
               >
                 <ToggleButton value={true} size="small">
                   Management
