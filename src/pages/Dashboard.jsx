@@ -25,9 +25,7 @@ function Dashboard() {
   const [studentDetails, setStudentDetails] = useState({});
   const [selectedNominee, setSelectedNominee] = useState("");
   const [paymentStatus, setPaymentStatus] = useState("");
-
   const [isManagementQuota, setIsManagementQuota] = useState(true);
-
   const [openWarningAlert, setOpenWarningAlert] = useState(false);
 
   const handleSearch = async (e) => {
@@ -38,12 +36,12 @@ function Dashboard() {
       const quotaLink = isManagementQuota
         ? import.meta.env.VITE_MANAGEMENT_QUOTA_LINK
         : import.meta.env.VITE_COMMUNITY_QUOTA_LINK;
-
       const response = await axios.get(
         `${quotaLink}/search?AppNo=${applicationNo}`
       );
       setSelectedNominee("");
       console.log(response.data);
+
       if (response.data.length > 0) {
         setStudentDetails(response.data);
       } else {
@@ -58,36 +56,56 @@ function Dashboard() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!studentDetails.length) {
       return;
     }
-
     // Assuming the sheet has an "id" field for each row
-
     const updatedStudent = {
       ...studentDetails[0], // Keep the existing data
       Nominee: selectedNominee, // Update the Nominee field
       AppNo: "", // AppNo must be empty to avoid conflict from sheet AppNo(Formula)
     };
 
+    const paymentUpdated = {
+      ...studentDetails[0],
+      Payment: paymentStatus,
+      AppNo: ""
+    }
+    console.log(paymentStatus);
     try {
-      const response = await axios.patch(
-        `${import.meta.env.VITE_MANAGEMENT_QUOTA_LINK}/AppNo/${applicationNo}`,
-        updatedStudent,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      alert("Nominee Added Successfully");
-      setStudentDetails(response.data);
-      console.log(response.data);
+      if (isManagementQuota) {
+        const response = await axios.patch(
+          `${import.meta.env.VITE_MANAGEMENT_QUOTA_LINK}/AppNo/${applicationNo}`,
+          updatedStudent,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        alert("Nominee Added Successfully");
+        setStudentDetails(response.data);
+        console.log(response.data);
+      } else {
+        const response = await axios.patch(
+          `${import.meta.env.VITE_COMMUNITY_QUOTA_LINK}/AppNo/${applicationNo}`,
+          paymentUpdated,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        alert("Payment status added Successfully");
+        setStudentDetails(response.data);
+        console.log(response.data);
+      }
     } catch (error) {
       console.error("An error occurred:", error);
     }
-  };
+
+
+  }
 
   /*
   const handleSubmit = async (e) => {
@@ -181,10 +199,7 @@ function Dashboard() {
               ) : (
                 <form
                   className="flex flex-col gap-3 md:flex-row w-full"
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    alert(paymentStatus);
-                  }}
+                  onSubmit={handleSubmit}
                 >
                   <FormControl fullWidth>
                     <InputLabel>Payment Status</InputLabel>
