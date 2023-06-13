@@ -7,9 +7,8 @@ import {
   TableRow,
   TableCell,
   Typography,
-  Button,
 } from "@mui/material";
-import PrintIcon from "@mui/icons-material/Print";
+
 
 function StudentDetails({ data }) {
   const student = data[0];
@@ -23,9 +22,6 @@ function StudentDetails({ data }) {
             <Typography variant="" className="font-semibold text-3xl px-2">
               Student&apos;s Details
             </Typography>
-            <Button variant="outlined" size="small" startIcon={<PrintIcon />}>
-              Print
-            </Button>
             </div>
           </TableRow>
         </TableHead>

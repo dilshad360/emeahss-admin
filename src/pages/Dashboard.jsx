@@ -27,7 +27,7 @@ function Dashboard() {
       e.preventDefault();
       const response = await axios.get(
         `${
-          import.meta.env.VITE_MANAGEMENT_QUOTA_LINK
+          import.meta.env.VITE_TEST_LINK
         }/search?AppNo=${applicationNo}`
       );
       setSelectedNominee("");
@@ -46,9 +46,47 @@ function Dashboard() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    alert(selectedNominee);
-    console.log(selectedNominee);
+  
+    if (!studentDetails.length) {
+      return;
+    }
+  
+   // Assuming the sheet has an "id" field for each row
+  
+    const updatedStudent = {
+      ...studentDetails[0], // Keep the existing data
+      Nominee: selectedNominee, // Update the Nominee field
+    };
+  
+    try {
+      const response = await axios.patch(
+        `https://sheet.best/api/sheets/b9ccbd5f-ec54-40e0-8175-22ecbcec2dbd/AppNo/${applicationNo}`,
+        updatedStudent,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+  
+      console.log(response.data);
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
   };
+  
+
+/*
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    alert(selectedNominee);
+    const formattedValues = {
+      Name:studentDetails[0].Name
+    }
+    //const response = await axios.post(`https://sheet.best/api/sheets/fbf9c08d-1133-4189-9432-19090a40f8af`,)
+    console.log(formattedValues);
+    console.log(selectedNominee);
+  };*/
 
   const handleCloseWarningAlert = (event, reason) => {
     if (reason === "clickaway") {
