@@ -9,7 +9,6 @@ import {
   Typography,
 } from "@mui/material";
 
-
 function StudentDetails({ data }) {
   const student = data[0];
 
@@ -17,20 +16,30 @@ function StudentDetails({ data }) {
     <TableContainer component={Paper} className="mt-3 p-2">
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
-          <TableRow >
+          <TableRow>
             <div className="flex items-center py-3">
-            <Typography variant="" className="font-semibold text-3xl px-2">
-              Student&apos;s Details
-            </Typography>
+              <Typography variant="" className="font-semibold text-3xl px-2">
+                Student&apos;s Details
+              </Typography>
             </div>
           </TableRow>
         </TableHead>
         <TableBody>
           <TableRow>
-            <TableCell colSpan={2}>
+            <TableCell>
               <b>Name: </b>
               {student.Name}
             </TableCell>
+            {student.Nominee && (
+              <TableCell
+                sx={{
+                  color: "green",
+                }}
+              >
+                <b>Nominee: </b>
+                {student.Nominee}
+              </TableCell>
+            )}
           </TableRow>
 
           <TableRow>
