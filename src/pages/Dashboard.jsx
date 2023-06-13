@@ -8,6 +8,9 @@ import {
   FormControl,
   ToggleButton,
   ToggleButtonGroup,
+  Select,
+  MenuItem,
+  InputLabel,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import CheckIcon from "@mui/icons-material/Check";
@@ -21,6 +24,7 @@ function Dashboard() {
   const [applicationNo, setApplicationNo] = useState("");
   const [studentDetails, setStudentDetails] = useState({});
   const [selectedNominee, setSelectedNominee] = useState("");
+  const [paymentStatus, setPaymentStatus] = useState("");
 
   const [isManagementQuota, setIsManagementQuota] = useState(true);
 
@@ -30,11 +34,10 @@ function Dashboard() {
     try {
       e.preventDefault();
 
+      // check if management quota is selected or not
       const quotaLink = isManagementQuota
         ? import.meta.env.VITE_MANAGEMENT_QUOTA_LINK
         : import.meta.env.VITE_COMMUNITY_QUOTA_LINK;
-
-      console.log(quotaLink);
 
       const response = await axios.get(
         `${quotaLink}/search?AppNo=${applicationNo}`
@@ -65,7 +68,7 @@ function Dashboard() {
     const updatedStudent = {
       ...studentDetails[0], // Keep the existing data
       Nominee: selectedNominee, // Update the Nominee field
-      AppNo: "",
+      AppNo: "", // AppNo must be empty to avoid conflict from sheet AppNo(Formula)
     };
 
     try {
@@ -78,7 +81,8 @@ function Dashboard() {
           },
         }
       );
-
+      alert("Nominee Added Successfully");
+      setStudentDetails(response.data);
       console.log(response.data);
     } catch (error) {
       console.error("An error occurred:", error);
@@ -146,7 +150,7 @@ function Dashboard() {
               </form>
 
               {/* Nominee Add Form */}
-              {isManagementQuota && (
+              {isManagementQuota ? (
                 <form
                   className="flex flex-col gap-3 md:flex-row w-full"
                   onSubmit={handleSubmit}
@@ -164,6 +168,35 @@ function Dashboard() {
                         <TextField {...params} label="Select Nominee" />
                       )}
                     />
+                  </FormControl>
+                  <Button
+                    type="submit"
+                    disabled={!studentDetails.length}
+                    variant="contained"
+                    color="success"
+                  >
+                    <CheckIcon />
+                  </Button>
+                </form>
+              ) : (
+                <form
+                  className="flex flex-col gap-3 md:flex-row w-full"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    alert(paymentStatus);
+                  }}
+                >
+                  <FormControl fullWidth>
+                    <InputLabel>Payment Status</InputLabel>
+                    <Select
+                      value={paymentStatus}
+                      label="Payment Status"
+                      disabled={!studentDetails.length}
+                      onChange={(e) => setPaymentStatus(e.target.value)}
+                    >
+                      <MenuItem value={"PAID"}>PAID</MenuItem>
+                      <MenuItem value={"UNPAID"}>UNPAID</MenuItem>
+                    </Select>
                   </FormControl>
                   <Button
                     type="submit"
