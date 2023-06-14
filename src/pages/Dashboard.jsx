@@ -19,6 +19,7 @@ import axios from "axios";
 import { nomineesOptions } from "../const/options";
 import StudentDetails from "../components/StudentDetails";
 import WarningAlert from "../components/alerts/WarningAlert";
+import SuccessAlert from "../components/alerts/SuccessAlert";
 
 function Dashboard() {
   const [applicationNo, setApplicationNo] = useState("");
@@ -26,6 +27,8 @@ function Dashboard() {
   const [selectedNominee, setSelectedNominee] = useState("");
   const [paymentStatus, setPaymentStatus] = useState("");
   const [isManagementQuota, setIsManagementQuota] = useState(true);
+
+  const [openSuccessAlert, setOpenSuccessAlert] = useState(false);
   const [openWarningAlert, setOpenWarningAlert] = useState(false);
 
   const handleSearch = async (e) => {
@@ -33,9 +36,9 @@ function Dashboard() {
       e.preventDefault();
 
       // To prevent the removel of AppNo formula from sheet
-      if(applicationNo === 'M0001' || applicationNo === 'C0001' ){
-        alert("Access Denied")
-        return
+      if (applicationNo === "M0001" || applicationNo === "C0001") {
+        alert("Access Denied");
+        return;
       }
 
       // check if management quota is selected or not
@@ -93,7 +96,7 @@ function Dashboard() {
             },
           }
         );
-        alert("Nominee Added Successfully");
+        setOpenSuccessAlert(true)
         setStudentDetails(response.data);
         console.log(response.data);
       } else {
@@ -106,11 +109,12 @@ function Dashboard() {
             },
           }
         );
-        alert("Payment status added Successfully");
+        setOpenSuccessAlert(true)
         setStudentDetails(response.data);
         console.log(response.data);
       }
     } catch (error) {
+      alert("Something went wrong",error)
       console.error("An error occurred:", error);
     }
   };
@@ -132,6 +136,13 @@ function Dashboard() {
       return;
     }
     setOpenWarningAlert(false);
+  };
+
+  const handleCloseSuccessAlert = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenSuccessAlert(false);
   };
 
   return (
@@ -243,6 +254,11 @@ function Dashboard() {
         open={openWarningAlert}
         handleClose={handleCloseWarningAlert}
         message="Application not found!"
+      />
+      <SuccessAlert
+        open={openSuccessAlert}
+        handleClose={handleCloseSuccessAlert}
+        message="Application Successfully Updated"
       />
     </>
   );

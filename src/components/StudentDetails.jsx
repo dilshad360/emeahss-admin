@@ -43,7 +43,7 @@ function StudentDetails({ data }) {
             {student.Payment && (
               <TableCell
                 sx={{
-                  color: "green",
+                  color: student.Payment === "PAID" ? "green" : "red",
                 }}
               >
                 <b>Payment: </b>
