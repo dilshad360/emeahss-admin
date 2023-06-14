@@ -1,10 +1,10 @@
 export const nomineesOptions = [
   "Basher Ali Shihab Thangal",
   "PK Abdurabb",
-  "PK Basheer",
-  "KPA Majeed",
+  "PK Basheer MLA",
+  "KPA Majeed MLA",
   "PK Moosa Alias Balathil Baapu",
-  "Malakathil Soopy",
+  "Nalakath Soopy",
   "K Muhammed Unni Haji",
   "Prof KM Aboobacker",
   "Hashim V",
