@@ -96,7 +96,7 @@ function Dashboard() {
             },
           }
         );
-        setOpenSuccessAlert(true)
+        setOpenSuccessAlert(true);
         setStudentDetails(response.data);
         console.log(response.data);
       } else {
@@ -109,12 +109,12 @@ function Dashboard() {
             },
           }
         );
-        setOpenSuccessAlert(true)
+        setOpenSuccessAlert(true);
         setStudentDetails(response.data);
         console.log(response.data);
       }
     } catch (error) {
-      alert("Something went wrong",error)
+      alert("Something went wrong", error);
       console.error("An error occurred:", error);
     }
   };
@@ -247,7 +247,12 @@ function Dashboard() {
               )}
             </div>
           </Paper>
-          {!!studentDetails.length && <StudentDetails data={studentDetails} />}
+          {!!studentDetails.length && (
+            <StudentDetails
+              data={studentDetails}
+              isManagement={isManagementQuota}
+            />
+          )}
         </Box>
       </div>
       <WarningAlert

@@ -9,7 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 
-function StudentDetails({ data }) {
+function StudentDetails({ data, isManagement }) {
   const student = data[0];
 
   return (
@@ -365,6 +365,302 @@ function StudentDetails({ data }) {
           </TableRow>
         </TableBody>
       </Table>
+      {!isManagement ? (
+        <>
+          <Table sx={{ marginTop: "20px" }}>
+            <TableBody>
+              <TableRow>
+                <TableCell>
+                  <b>
+                    Whether the applicant is eligible for bonus points under the
+                    following category :
+                  </b>
+                  {student.ExtraCurricular}
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell sx={{ fontSize: "18px" }}>
+                  <b>Participation in Sports</b>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>
+                  <b>
+                    State Level Participation(Number of items participated) :
+                  </b>
+                  {student.SportsStateLevel}
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>
+                  <b>District Level</b>
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+          <Table sx={{ marginBottom: "20px" }}>
+            <TableBody>
+              <TableRow
+                sx={{ backgroundColor: "#d8dceb", borderColor: "#b6b8bf" }}
+              >
+                <TableCell sx={{ borderRight: "1px solid #b6b8bf" }}>
+                  <b>A Grade</b>
+                </TableCell>
+                <TableCell sx={{ borderRight: "1px solid #b6b8bf" }}>
+                  <b>B Grade</b>
+                </TableCell>
+                <TableCell sx={{ borderRight: "1px solid #b6b8bf" }}>
+                  <b>C Grade</b>
+                </TableCell>
+                <TableCell sx={{ borderRight: "1px solid #b6b8bf" }}>
+                  <b>Participation</b>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
+                  {student.SportsDistrictA}
+                </TableCell>
+                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
+                  {student.SportsDistrictB}
+                </TableCell>
+                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
+                  {student.SportsDistrictC}
+                </TableCell>
+                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
+                  {student.SportsDistrictParticipation}
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+          <Table>
+            <TableBody>
+              <TableRow>
+                <TableCell sx={{ fontSize: "18px" }}>
+                  <b>Participation in Kerala School Kalotsavam</b>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>
+                  <b>
+                    State Level Participation(Number of items participated) :{" "}
+                  </b>
+                  {student.KalotsavamStateLevel}
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>
+                  <b>District Level</b>
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+          <Table sx={{ marginBottom: "20px" }}>
+            <TableBody>
+              <TableRow
+                sx={{ backgroundColor: "#d8dceb", borderColor: "#b6b8bf" }}
+              >
+                <TableCell sx={{ borderRight: "1px solid #b6b8bf" }}>
+                  <b>A Grade</b>
+                </TableCell>
+                <TableCell sx={{ borderRight: "1px solid #b6b8bf" }}>
+                  <b>B Grade</b>
+                </TableCell>
+                <TableCell sx={{ borderRight: "1px solid #b6b8bf" }}>
+                  <b>C Grade</b>
+                </TableCell>
+                <TableCell sx={{ borderRight: "1px solid #b6b8bf" }}>
+                  <b>Participation</b>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
+                  {student.ArtsDistrictA}
+                </TableCell>
+                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
+                  {student.ArtsDistrictB}
+                </TableCell>
+                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
+                  {student.ArtsDistrictC}
+                </TableCell>
+                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
+                  {student.ArtsDistrictParticipation}
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+          <Table>
+            <TableBody>
+              <TableRow>
+                <TableCell>
+                  <b>
+                    Whether qualified in the National/State Level Test for the
+                    National Talent Search Examination :
+                  </b>
+                  {student.NationalOrStateLevelExamination}
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>
+                  <b>
+                    (a) Details of participation in co-curricular activites and
+                    the number of grades won
+                  </b>
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+          <Table sx={{ marginBottom: "20px" }}>
+            <TableBody>
+              <TableRow
+                sx={{ backgroundColor: "#d8dceb", borderColor: "#b6b8bf" }}
+              >
+                <TableCell
+                  sx={{ backgroundColor: "#d8dceb", borderColor: "#b6b8bf" }}
+                ></TableCell>
+                <TableCell sx={{ borderRight: "1px solid #b6b8bf" }}>
+                  A Grade
+                </TableCell>
+                <TableCell sx={{ borderRight: "1px solid #b6b8bf" }}>
+                  B Grade
+                </TableCell>
+                <TableCell sx={{ borderRight: "1px solid #b6b8bf" }}>
+                  C Grade
+                </TableCell>
+                <TableCell sx={{ borderRight: "1px solid #b6b8bf" }}>
+                  D Grade
+                </TableCell>
+                <TableCell sx={{ borderRight: "1px solid #b6b8bf" }}>
+                  E Grade
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell
+                  sx={{ backgroundColor: "#d8dceb", borderColor: "#b6b8bf" }}
+                >
+                  State Science Fair
+                </TableCell>
+                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
+                  {student.StateScienceFairA}
+                </TableCell>
+                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
+                  {student.StateScienceFairB}
+                </TableCell>
+                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
+                  {student.StateScienceFairC}
+                </TableCell>
+                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
+                  {student.StateScienceFairD}
+                </TableCell>
+                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
+                  {student.StateScienceFairE}
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell
+                  sx={{ backgroundColor: "#d8dceb", borderColor: "#b6b8bf" }}
+                >
+                  State Social Science Fair
+                </TableCell>
+                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
+                  {student.StateSocialFairA}
+                </TableCell>
+                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
+                  {student.StateSocialFairB}
+                </TableCell>
+                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
+                  {student.StateSocialFairC}
+                </TableCell>
+                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
+                  {student.StateSocialFairD}
+                </TableCell>
+                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
+                  {student.StateSocialFairE}
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell
+                  sx={{ backgroundColor: "#d8dceb", borderColor: "#b6b8bf" }}
+                >
+                  State Maths Fair
+                </TableCell>
+                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
+                  {student.StateMathsFairA}
+                </TableCell>
+                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
+                  {student.StateMathsFairB}
+                </TableCell>
+                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
+                  {student.StateMathsFairC}
+                </TableCell>
+                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
+                  {student.StateMathsFairD}
+                </TableCell>
+                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
+                  {student.StateMathsFairE}
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell
+                  sx={{ backgroundColor: "#d8dceb", borderColor: "#b6b8bf" }}
+                >
+                  State IT Fest
+                </TableCell>
+                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
+                  {student.StateITFestA}
+                </TableCell>
+                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
+                  {student.StateITFestB}
+                </TableCell>
+                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
+                  {student.StateITFestC}
+                </TableCell>
+                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
+                  {student.StateITFestD}
+                </TableCell>
+                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
+                  {student.StateITFestE}
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell
+                  sx={{ backgroundColor: "#d8dceb", borderColor: "#b6b8bf" }}
+                >
+                  State Work Experiece Fair
+                </TableCell>
+                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
+                  {student.StateWorkExperienceFairA}
+                </TableCell>
+                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
+                  {student.StateWorkExperienceFairB}
+                </TableCell>
+                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
+                  {student.StateWorkExperienceFairC}
+                </TableCell>
+                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
+                  {student.StateWorkExperienceFairD}
+                </TableCell>
+                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
+                  {student.StateWorkExperienceFairE}
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+          <Table>
+            <TableBody>
+              <TableRow>
+                <TableCell>
+                  <b>(b) Relevant</b>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell sx={{ paddingLeft: "50px" }}>
+                  {student.Club}
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </>
+      ) : null}
     </TableContainer>
   );
 }
