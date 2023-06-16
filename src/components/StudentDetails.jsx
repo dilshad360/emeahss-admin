@@ -8,7 +8,7 @@ import {
   TableCell,
   Typography,
 } from "@mui/material";
-import { useEffect } from "react";
+
 
 function StudentDetails({ data, isManagement }) {
   const stateMarksToGrade = {
@@ -31,9 +31,6 @@ function StudentDetails({ data, isManagement }) {
     '3':'D2',
   }
   const student = data[0];
-  useEffect(()=>{
-    console.log(student.Board);
-  })
   return (
     <TableContainer component={Paper} className="mt-3 p-2">
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
