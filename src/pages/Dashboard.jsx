@@ -190,6 +190,7 @@ function Dashboard() {
               </form>
 
               {/* Nominee Add Form */}
+              {/*  
               {isManagementQuota ? (
                 <form
                   className="flex flex-col gap-3 md:flex-row w-full"
@@ -244,7 +245,7 @@ function Dashboard() {
                     <CheckIcon />
                   </Button>
                 </form>
-              )}
+              )}*/}
             </div>
           </Paper>
           {!!studentDetails.length && (
