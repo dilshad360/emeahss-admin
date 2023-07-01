@@ -9,9 +9,28 @@ import {
   Typography,
 } from "@mui/material";
 
-function StudentDetails({ data, isManagement }) {
-  const student = data[0];
 
+function StudentDetails({ data, isManagement }) {
+  const stateMarksToGrade = {
+    '9':'A+',
+    '8':'A',
+    '7':'B+',
+    '6':'B',
+    '5':'C+',
+    '4':'C',
+    '3':'D+',
+  }
+  const cbseMarksToGrade = {
+    '10':'A1',
+    '9':'A2',
+    '8':'B1',
+    '7':'B2',
+    '6':'C1',
+    '5':'C2',
+    '4':'D1',
+    '3':'D2',
+  }
+  const student = data[0];
   return (
     <TableContainer component={Paper} className="mt-3 p-2">
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -213,34 +232,34 @@ function StudentDetails({ data, isManagement }) {
                 <b>Grade</b>
               </TableCell>
               <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-                {student.Language1}
+                {stateMarksToGrade[student.Language1]}
               </TableCell>
               <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-                {student.Language2}
+                {stateMarksToGrade[student.Language2]}
               </TableCell>
               <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-                {student.English}
+                {stateMarksToGrade[student.English]}
               </TableCell>
               <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-                {student.Hindi}
+                {stateMarksToGrade[student.Hindi]}
               </TableCell>
               <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-                {student.SocialScience}
+                {stateMarksToGrade[student.SocialScience]}
               </TableCell>
               <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-                {student.Physics}
+                {stateMarksToGrade[student.Physics]}
               </TableCell>
               <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-                {student.Chemistry}
+                {stateMarksToGrade[student.Chemistry]}
               </TableCell>
               <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-                {student.Biology}
+                {stateMarksToGrade[student.Biology]}
               </TableCell>
               <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-                {student.Maths}
+                {stateMarksToGrade[student.Maths]}
               </TableCell>
               <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-                {student.IT}
+                {stateMarksToGrade[student.IT]}
               </TableCell>
             </TableRow>
           </TableBody>
@@ -297,31 +316,31 @@ function StudentDetails({ data, isManagement }) {
                 sx={{ borderRight: "1px solid #d8dceb" }}
                 width="200px"
               >
-                {student.Language2}
+                {cbseMarksToGrade[student.Language2]}
               </TableCell>
               <TableCell
                 sx={{ borderRight: "1px solid #d8dceb" }}
                 width="200px"
               >
-                {student.English}
+                {cbseMarksToGrade[student.English]}
               </TableCell>
               <TableCell
                 sx={{ borderRight: "1px solid #d8dceb" }}
                 width="200px"
               >
-                {student.Maths}
+                {cbseMarksToGrade[student.Maths]}
               </TableCell>
               <TableCell
                 sx={{ borderRight: "1px solid #d8dceb" }}
                 width="200px"
               >
-                {student.SocialScience}
+                {cbseMarksToGrade[student.SocialScience]}
               </TableCell>
               <TableCell
                 sx={{ borderRight: "1px solid #d8dceb" }}
                 width="200px"
               >
-                {student.Science}
+                {cbseMarksToGrade[student.Science]}
               </TableCell>
             </TableRow>
           </TableBody>
