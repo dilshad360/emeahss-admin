@@ -18,3 +18,17 @@ export const nomineesOptions = [
   "CP Suhail",
   "Farook",
 ];
+
+//gender
+export const genderOptions = [
+  { value: 'Male', label: 'Male' },
+  { value: 'Female', label: 'Female' },
+  { value: 'Other', label: 'Other' },
+];
+
+export const religionOptions = [
+  { value: 'Muslim', label: 'Muslim' },
+  { value: 'Hinduism', label: 'Hinduism' },
+  { value: 'Christianity ', label: 'Christianity' },
+  { value: 'other', label: 'Other' },
+];

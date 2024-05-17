@@ -27,7 +27,7 @@ function Dashboard() {
   const [selectedNominee, setSelectedNominee] = useState("");
   const [paymentStatus, setPaymentStatus] = useState("");
   const [isManagementQuota, setIsManagementQuota] = useState(true);
-
+  
   const [openSuccessAlert, setOpenSuccessAlert] = useState(false);
   const [openWarningAlert, setOpenWarningAlert] = useState(false);
 
@@ -38,6 +38,7 @@ function Dashboard() {
       // To prevent the removel of AppNo formula from sheet
       if (applicationNo === "M0001" || applicationNo === "C0001") {
         alert("Access Denied");
+        setOpenWarningAlert(true);
         return;
       }
 
@@ -148,7 +149,7 @@ function Dashboard() {
   return (
     <>
       <NavBar />
-      <div className="h-full flex flex-col items-center bg-slate-100">
+      <div className="min-h-screen flex flex-col items-center bg-slate-100 ">
         <Box className="w-11/12 my-5 md:w-5/6">
           <Paper className="p-4">
             <div className="flex items-center justify-center gap-2 flex-col pb-4">
@@ -190,7 +191,7 @@ function Dashboard() {
               </form>
 
               {/* Nominee Add Form */}
-              {/*  
+               
               {isManagementQuota ? (
                 <form
                   className="flex flex-col gap-3 md:flex-row w-full"
@@ -245,7 +246,7 @@ function Dashboard() {
                     <CheckIcon />
                   </Button>
                 </form>
-              )}*/}
+              )}
             </div>
           </Paper>
           {!!studentDetails.length && (

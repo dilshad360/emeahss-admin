@@ -7,47 +7,137 @@ import {
   TableRow,
   TableCell,
   Typography,
+  TextField,
+  Button,
+  Select,
+  MenuItem,
 } from "@mui/material";
+
+import EditIcon from "@mui/icons-material/Edit";
+import SaveIcon from "@mui/icons-material/Save";
+import ClearIcon from '@mui/icons-material/Clear';
+import { useState } from "react";
+import axios from "axios";
+import Loader from "./Loader";
+import { genderOptions, religionOptions } from "../const/options";
+
 
 
 function StudentDetails({ data, isManagement }) {
+
+  const [editMode, setEditMode] = useState(false);
+
+
   const stateMarksToGrade = {
-    '9':'A+',
-    '8':'A',
-    '7':'B+',
-    '6':'B',
-    '5':'C+',
-    '4':'C',
-    '3':'D+',
+    '9': 'A+',
+    '8': 'A',
+    '7': 'B+',
+    '6': 'B',
+    '5': 'C+',
+    '4': 'C',
+    '3': 'D+',
   }
   const cbseMarksToGrade = {
-    '10':'A1',
-    '9':'A2',
-    '8':'B1',
-    '7':'B2',
-    '6':'C1',
-    '5':'C2',
-    '4':'D1',
-    '3':'D2',
+    '10': 'A1',
+    '9': 'A2',
+    '8': 'B1',
+    '7': 'B2',
+    '6': 'C1',
+    '5': 'C2',
+    '4': 'D1',
+    '3': 'D2',
   }
-  const student = data[0];
+  const [student, setStudent] = useState(data[0]);
+
+  const [editData, setEditData] = useState(data[0]);
+
+  const [isloading, setIsloading] = useState(false);
+
+  const handleChange = (e) => {
+    setEditData({
+      ...editData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+
+  const updateData = (data) => {
+    const updatedData = {
+      ...data,
+      AppNo: student.AppNo,
+    };
+    setStudent(
+      updatedData
+    )
+  }
+
+  const handleSubmit = async () => {
+    setEditMode(false)
+    setIsloading(true)
+
+    const updatedStudent = {
+      ...editData, // Keep the existing data
+      AppNo: "", // AppNo must be empty to avoid conflict from sheet AppNo(Formula)
+    };
+
+
+    try {
+      const response = await axios.patch(
+        `${import.meta.env.VITE_MANAGEMENT_QUOTA_LINK
+        }/AppNo/${student.AppNo}`,
+        updatedStudent,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        },
+      );
+      updateData(response.data[0]);
+      setIsloading(false)
+    } catch (error) {
+      console.log(error)
+      setIsloading(false)
+    }
+
+  }
+
   return (
     <TableContainer component={Paper} className="mt-3 p-2">
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
+      {isloading && <Loader />}
+      <Table aria-label="simple table" className="text-red-500">
+        <TableHead  >
           <TableRow>
-            <div className="flex items-center py-3">
-              <Typography variant="" className="font-semibold text-3xl px-2">
-                Student&apos;s Details
-              </Typography>
-            </div>
+            <TableCell colSpan={2} className="py-3 bg-slate-100 rounded-md">
+              <div className="flex justify-between items-center">
+                <Typography variant="" className="font-semibold text-3xl px-2">
+                  Student&apos;s Details  <span className="text-blue-700">{student.AppNo}</span>
+                </Typography>
+
+                {editMode ?
+                <div className="space-x-2" >
+                  <Button variant="outlined" onClick={()=>{setEditMode(false); setEditData(data[0])}} >
+                    <ClearIcon />
+                  </Button>
+                  <Button color="success" variant="contained" onClick={handleSubmit} >
+                    <SaveIcon />
+                  </Button>
+                </div>
+                  : <Button variant="outlined" onClick={() => { setEditMode(true) }} >
+                    <EditIcon />
+                  </Button>}
+
+              </div>
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           <TableRow>
-            <TableCell>
+            <TableCell  >
               <b>Name: </b>
-              {student.Name}
+              {editMode ?
+                <TextField type="text" name="Name" size="small" variant="outlined" onChange={handleChange} value={editData.Name} /> :
+                <>{student.Name}</>
+              }
             </TableCell>
             {student.Nominee && (
               <TableCell
@@ -74,36 +164,73 @@ function StudentDetails({ data, isManagement }) {
           <TableRow>
             <TableCell>
               <b>Mobile Number: </b>
-              {student.MobileNumber}
+              {editMode ?
+                <TextField type="text" name="MobileNumber" size="small" variant="outlined" onChange={handleChange} value={editData.MobileNumber} /> :
+                <>{student.MobileNumber}</>
+              }
             </TableCell>
             <TableCell>
               <b>Whatsapp Number: </b>
-              {student.WhatsappNumber}
+              {editMode ?
+                <TextField type="text" name="WhatsappNumber" size="small" variant="outlined" onChange={handleChange} value={editData.WhatsappNumber} /> :
+                <>{student.WhatsappNumber}</>
+              }
             </TableCell>
           </TableRow>
 
           <TableRow>
             <TableCell colSpan={2}>
               <b>Single Window Number: </b>
-              {student.SingleWindowNo}
+              {editMode ?
+                <TextField type="text" name="SingleWindowNo" size="small" variant="outlined" onChange={handleChange} value={editData.SingleWindowNo} /> :
+                <>{student.SingleWindowNo}</>
+              }
             </TableCell>
           </TableRow>
 
           <TableRow>
             <TableCell colSpan={2}>
               <b>Date of Birth: </b>
-              {student.DateOfBirth}
+              {editMode ?
+                <TextField type="text" name="DateOfBirth" size="small" variant="outlined" onChange={handleChange} value={editData.DateOfBirth} disabled /> :
+                <>{student.DateOfBirth}</>
+              }
             </TableCell>
           </TableRow>
 
           <TableRow>
             <TableCell>
               <b>Gender: </b>
-              {student.Gender}
+              {editMode ?
+                <Select
+                size="small"
+                value={editData.Gender}
+                onChange={handleChange}
+                name="Gender"
+              >
+                {genderOptions.map((option) => (
+                <MenuItem key={option.value} value={option.value}>{option.label}</MenuItem>
+                ))}
+              </Select> :
+                <>{student.Gender}</>
+              }
+              
             </TableCell>
             <TableCell>
               <b>Religion: </b>
-              {student.Religion}
+              {editMode ?
+                <Select
+                size="small"
+                value={editData.Religion}
+                onChange={handleChange}
+                name="Religion"
+              >
+                {religionOptions.map((option) => (
+                <MenuItem key={option.value} value={option.value}>{option.label}</MenuItem>
+                ))}
+              </Select> :
+                <>{student.Religion}</>
+              }
             </TableCell>
           </TableRow>
 
@@ -677,6 +804,7 @@ function StudentDetails({ data, isManagement }) {
                 </TableCell>
               </TableRow>
             </TableBody>
+
           </Table>
         </>
       ) : null}
