@@ -19,7 +19,8 @@ import ClearIcon from '@mui/icons-material/Clear';
 import { useState } from "react";
 import axios from "axios";
 import Loader from "./Loader";
-import { genderOptions, religionOptions } from "../const/options";
+import { cbseGradesOptions, examOptions, genderOptions, religionOptions, stateGradesOptions } from "../const/options";
+import GradeView from "./GradeView";
 
 
 
@@ -28,25 +29,7 @@ function StudentDetails({ data, isManagement }) {
   const [editMode, setEditMode] = useState(false);
 
 
-  const stateMarksToGrade = {
-    '9': 'A+',
-    '8': 'A',
-    '7': 'B+',
-    '6': 'B',
-    '5': 'C+',
-    '4': 'C',
-    '3': 'D+',
-  }
-  const cbseMarksToGrade = {
-    '10': 'A1',
-    '9': 'A2',
-    '8': 'B1',
-    '7': 'B2',
-    '6': 'C1',
-    '5': 'C2',
-    '4': 'D1',
-    '3': 'D2',
-  }
+
   const [student, setStudent] = useState(data[0]);
 
   const [editData, setEditData] = useState(data[0]);
@@ -58,6 +41,7 @@ function StudentDetails({ data, isManagement }) {
       ...editData,
       [e.target.name]: e.target.value,
     });
+    console.log(editData)
   };
 
 
@@ -80,11 +64,11 @@ function StudentDetails({ data, isManagement }) {
       AppNo: "", // AppNo must be empty to avoid conflict from sheet AppNo(Formula)
     };
 
+    const q = isManagement ? import.meta.env.VITE_MANAGEMENT_QUOTA_LINK : import.meta.env.VITE_COMMUNITY_QUOTA_LINK;
 
     try {
       const response = await axios.patch(
-        `${import.meta.env.VITE_MANAGEMENT_QUOTA_LINK
-        }/AppNo/${student.AppNo}`,
+        `${q}/AppNo/${student.AppNo}`,
         updatedStudent,
         {
           headers: {
@@ -114,14 +98,14 @@ function StudentDetails({ data, isManagement }) {
                 </Typography>
 
                 {editMode ?
-                <div className="space-x-2" >
-                  <Button variant="outlined" onClick={()=>{setEditMode(false); setEditData(data[0])}} >
-                    <ClearIcon />
-                  </Button>
-                  <Button color="success" variant="contained" onClick={handleSubmit} >
-                    <SaveIcon />
-                  </Button>
-                </div>
+                  <div className="space-x-2" >
+                    <Button variant="outlined" onClick={() => { setEditMode(false); setEditData(data[0]); setStudent(data[0]) }} >
+                      <ClearIcon />
+                    </Button>
+                    <Button color="success" variant="contained" onClick={handleSubmit} >
+                      <SaveIcon />
+                    </Button>
+                  </div>
                   : <Button variant="outlined" onClick={() => { setEditMode(true) }} >
                     <EditIcon />
                   </Button>}
@@ -203,32 +187,32 @@ function StudentDetails({ data, isManagement }) {
               <b>Gender: </b>
               {editMode ?
                 <Select
-                size="small"
-                value={editData.Gender}
-                onChange={handleChange}
-                name="Gender"
-              >
-                {genderOptions.map((option) => (
-                <MenuItem key={option.value} value={option.value}>{option.label}</MenuItem>
-                ))}
-              </Select> :
+                  size="small"
+                  value={editData.Gender}
+                  onChange={handleChange}
+                  name="Gender"
+                >
+                  {genderOptions.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>{option.label}</MenuItem>
+                  ))}
+                </Select> :
                 <>{student.Gender}</>
               }
-              
+
             </TableCell>
             <TableCell>
               <b>Religion: </b>
               {editMode ?
                 <Select
-                size="small"
-                value={editData.Religion}
-                onChange={handleChange}
-                name="Religion"
-              >
-                {religionOptions.map((option) => (
-                <MenuItem key={option.value} value={option.value}>{option.label}</MenuItem>
-                ))}
-              </Select> :
+                  size="small"
+                  value={editData.Religion}
+                  onChange={handleChange}
+                  name="Religion"
+                >
+                  {religionOptions.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>{option.label}</MenuItem>
+                  ))}
+                </Select> :
                 <>{student.Religion}</>
               }
             </TableCell>
@@ -237,18 +221,36 @@ function StudentDetails({ data, isManagement }) {
           <TableRow>
             <TableCell>
               <b>Register Number: </b>
-              {student.RegNumber}
+              {editMode ?
+                <TextField type="text" name="RegNumber" size="small" variant="outlined" onChange={handleChange} value={editData.RegNumber} /> :
+                <>{student.RegNumber}</>
+              }
             </TableCell>
             <TableCell>
               <b>Year: </b>
-              {student.Year}
+              {editMode ?
+                <TextField type="text" name="Year" size="small" variant="outlined" onChange={handleChange} value={editData.Year} /> :
+                <> {student.Year}</>
+              }
             </TableCell>
           </TableRow>
 
           <TableRow>
             <TableCell colSpan={2}>
               <b>Board of Examination: </b>
-              {student.Board}
+              {editMode ?
+                <Select
+                  size="small"
+                  value={editData.Board}
+                  onChange={handleChange}
+                  name="Board"
+                >
+                  {examOptions.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>{option.label}</MenuItem>
+                  ))}
+                </Select> :
+                <>{student.Board}</>
+              }
             </TableCell>
           </TableRow>
 
@@ -296,7 +298,8 @@ function StudentDetails({ data, isManagement }) {
           </TableRow>
         </TableBody>
       </Table>
-      {student.Board === "Other" || student.Board === "STATE" ? (
+
+      {editMode ? (<> {editData.Board === "Other" || editData.Board === "STATE" ? (
         <Table
           sx={{
             marginTop: "40px",
@@ -359,39 +362,129 @@ function StudentDetails({ data, isManagement }) {
                 <b>Grade</b>
               </TableCell>
               <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-                {stateMarksToGrade[student.Language1]}
+                <Select
+                  size="small"
+                  value={editData.Language1}
+                  onChange={handleChange}
+                  name="Language1"
+                >
+                  {stateGradesOptions.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>{option.label}</MenuItem>
+                  ))}
+                </Select>
               </TableCell>
               <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-                {stateMarksToGrade[student.Language2]}
+              <Select
+                  size="small"
+                  value={editData.Language2}
+                  onChange={handleChange}
+                  name="Language2"
+                >
+                  {stateGradesOptions.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>{option.label}</MenuItem>
+                  ))}
+                </Select>
               </TableCell>
               <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-                {stateMarksToGrade[student.English]}
+              <Select
+                  size="small"
+                  value={editData.English}
+                  onChange={handleChange}
+                  name="English"
+                >
+                  {stateGradesOptions.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>{option.label}</MenuItem>
+                  ))}
+                </Select>
               </TableCell>
               <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-                {stateMarksToGrade[student.Hindi]}
+              <Select
+                  size="small"
+                  value={editData.Hindi}
+                  onChange={handleChange}
+                  name="Hindi"
+                >
+                  {stateGradesOptions.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>{option.label}</MenuItem>
+                  ))}
+                </Select>
               </TableCell>
               <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-                {stateMarksToGrade[student.SocialScience]}
+              <Select
+                  size="small"
+                  value={editData.SocialScience}
+                  onChange={handleChange}
+                  name="SocialScience"
+                >
+                  {stateGradesOptions.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>{option.label}</MenuItem>
+                  ))}
+                </Select>
               </TableCell>
               <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-                {stateMarksToGrade[student.Physics]}
+              <Select
+                  size="small"
+                  value={editData.Physics}
+                  onChange={handleChange}
+                  name="Physics"
+                >
+                  {stateGradesOptions.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>{option.label}</MenuItem>
+                  ))}
+                </Select>
               </TableCell>
               <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-                {stateMarksToGrade[student.Chemistry]}
+              <Select
+                  size="small"
+                  value={editData.Chemistry}
+                  onChange={handleChange}
+                  name="Chemistry"
+                >
+                  {stateGradesOptions.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>{option.label}</MenuItem>
+                  ))}
+                </Select>
               </TableCell>
               <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-                {stateMarksToGrade[student.Biology]}
+              <Select
+                  size="small"
+                  value={editData.Biology}
+                  onChange={handleChange}
+                  name="Biology"
+                >
+                  {stateGradesOptions.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>{option.label}</MenuItem>
+                  ))}
+                </Select>
               </TableCell>
               <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-                {stateMarksToGrade[student.Maths]}
+              <Select
+                  size="small"
+                  value={editData.Maths}
+                  onChange={handleChange}
+                  name="Maths"
+                >
+                  {stateGradesOptions.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>{option.label}</MenuItem>
+                  ))}
+                </Select>
               </TableCell>
               <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-                {stateMarksToGrade[student.IT]}
+              <Select
+                  size="small"
+                  value={editData.IT}
+                  onChange={handleChange}
+                  name="IT"
+                >
+                  {stateGradesOptions.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>{option.label}</MenuItem>
+                  ))}
+                </Select>
               </TableCell>
             </TableRow>
           </TableBody>
         </Table>
-      ) : student.Board === "CBSE" ? (
+      ) : editData.Board === "CBSE" ? (
         <Table
           sx={{
             marginTop: "40px",
@@ -443,36 +536,82 @@ function StudentDetails({ data, isManagement }) {
                 sx={{ borderRight: "1px solid #d8dceb" }}
                 width="200px"
               >
-                {cbseMarksToGrade[student.Language2]}
+                <Select
+                  size="small"
+                  value={editData.Language2}
+                  onChange={handleChange}
+                  name="Language2"
+                >
+                  {cbseGradesOptions.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>{option.label}</MenuItem>
+                  ))}
+                </Select>
               </TableCell>
               <TableCell
                 sx={{ borderRight: "1px solid #d8dceb" }}
                 width="200px"
               >
-                {cbseMarksToGrade[student.English]}
+                <Select
+                  size="small"
+                  value={editData.English}
+                  onChange={handleChange}
+                  name="English"
+                >
+                  {cbseGradesOptions.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>{option.label}</MenuItem>
+                  ))}
+                </Select>
               </TableCell>
               <TableCell
                 sx={{ borderRight: "1px solid #d8dceb" }}
                 width="200px"
               >
-                {cbseMarksToGrade[student.Maths]}
+                <Select
+                  size="small"
+                  value={editData.Maths}
+                  onChange={handleChange}
+                  name="Maths"
+                >
+                  {cbseGradesOptions.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>{option.label}</MenuItem>
+                  ))}
+                </Select>
               </TableCell>
               <TableCell
                 sx={{ borderRight: "1px solid #d8dceb" }}
                 width="200px"
               >
-                {cbseMarksToGrade[student.SocialScience]}
+                <Select
+                  size="small"
+                  value={editData.SocialScience}
+                  onChange={handleChange}
+                  name="SocialScience"
+                >
+                  {cbseGradesOptions.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>{option.label}</MenuItem>
+                  ))}
+                </Select>
               </TableCell>
               <TableCell
                 sx={{ borderRight: "1px solid #d8dceb" }}
                 width="200px"
               >
-                {cbseMarksToGrade[student.Science]}
+                <Select
+                  size="small"
+                  value={editData.Science}
+                  onChange={handleChange}
+                  name="Science"
+                >
+                  {cbseGradesOptions.map((option) => (
+                    <MenuItem key={option.value}  value={option.value}>{option.label}</MenuItem>
+                  ))}
+                </Select>
               </TableCell>
             </TableRow>
           </TableBody>
         </Table>
-      ) : null}
+      ) : null}</>) : (<GradeView student={student} />)}
+
 
       <Table
         sx={{

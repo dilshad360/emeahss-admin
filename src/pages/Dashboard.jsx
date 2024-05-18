@@ -32,6 +32,7 @@ function Dashboard() {
   const [openWarningAlert, setOpenWarningAlert] = useState(false);
 
   const handleSearch = async (e) => {
+    setStudentDetails({});
     try {
       e.preventDefault();
 
