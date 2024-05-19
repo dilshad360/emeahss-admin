@@ -121,17 +121,7 @@ function Dashboard() {
     }
   };
 
-  /*
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    alert(selectedNominee);
-    const formattedValues = {
-      Name:studentDetails[0].Name
-    }
-    //const response = await axios.post(`https://sheet.best/api/sheets/fbf9c08d-1133-4189-9432-19090a40f8af`,)
-    console.log(formattedValues);
-    console.log(selectedNominee);
-  };*/
+
 
   const handleCloseWarningAlert = (event, reason) => {
     if (reason === "clickaway") {

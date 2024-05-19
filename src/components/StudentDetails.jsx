@@ -11,6 +11,8 @@ import {
   Button,
   Select,
   MenuItem,
+  FormHelperText,
+  Autocomplete,
 } from "@mui/material";
 
 import EditIcon from "@mui/icons-material/Edit";
@@ -19,7 +21,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 import { useState } from "react";
 import axios from "axios";
 import Loader from "./Loader";
-import { cbseGradesOptions, examOptions, genderOptions, religionOptions, stateGradesOptions } from "../const/options";
+import { cbseGradesOptions, courseOptions, examOptions, genderOptions, panchayatOptions, religionOptions, stateGradesOptions } from "../const/options";
 import GradeView from "./GradeView";
 
 
@@ -41,8 +43,28 @@ function StudentDetails({ data, isManagement }) {
       ...editData,
       [e.target.name]: e.target.value,
     });
-    console.log(editData)
+    console.log(e)
   };
+
+  const handleBoardChange = (e) => {
+    setEditData({
+      ...editData,
+      [e.target.name]: e.target.value,
+      Language1: "",
+      Language2: "",
+      Hindi: "",
+      English: "",
+      SocialScience: "",
+      Physics: "",
+      Chemistry: "",
+      Biology: "",
+      Maths: "",
+      IT: "",
+      Science: "",
+    });
+  };
+
+
 
 
   const updateData = (data) => {
@@ -149,7 +171,7 @@ function StudentDetails({ data, isManagement }) {
             <TableCell>
               <b>Mobile Number: </b>
               {editMode ?
-                <TextField type="text" name="MobileNumber" size="small" variant="outlined" onChange={handleChange} value={editData.MobileNumber} /> :
+                <TextField disabled type="text" name="MobileNumber" size="small" variant="outlined" onChange={handleChange} value={editData.MobileNumber} /> :
                 <>{student.MobileNumber}</>
               }
             </TableCell>
@@ -239,16 +261,20 @@ function StudentDetails({ data, isManagement }) {
             <TableCell colSpan={2}>
               <b>Board of Examination: </b>
               {editMode ?
-                <Select
-                  size="small"
-                  value={editData.Board}
-                  onChange={handleChange}
-                  name="Board"
-                >
-                  {examOptions.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>{option.label}</MenuItem>
-                  ))}
-                </Select> :
+                <>
+                  <Select
+                    size="small"
+                    value={editData.Board}
+                    onChange={handleBoardChange}
+                    name="Board"
+                  >
+                    {examOptions.map((option) => (
+                      <MenuItem key={option.value} value={option.value}>{option.label}</MenuItem>
+                    ))}
+                  </Select>
+                  <FormHelperText sx={{ color: "orange" }} >Changing the board will erase the previous grades, so please re-enter them.</FormHelperText>
+                </>
+                :
                 <>{student.Board}</>
               }
             </TableCell>
@@ -256,44 +282,79 @@ function StudentDetails({ data, isManagement }) {
 
           <TableRow>
             <TableCell colSpan={2}>
-              <b>School Name: </b>
-              {student.SchoolName}
+              <div className="flex gap-1">
+                <b>School Name: </b>
+                {editMode ?
+                <TextField type="text" name="SchoolName" size="small" variant="outlined" className="w-2/4" onChange={handleChange} value={editData.SchoolName} /> 
+                  :
+                  <>
+                    {student.SchoolName}
+                  </>
+                }
+              </div>
             </TableCell>
           </TableRow>
 
           <TableRow>
             <TableCell colSpan={2}>
               <b>Father Name: </b>
-              {student.FatherName}
+              {editMode ?
+                <TextField type="text" name="FatherName" size="small" variant="outlined" onChange={handleChange} value={editData.FatherName} /> :
+                <>{student.FatherName}</>
+              }
             </TableCell>
           </TableRow>
 
           <TableRow>
             <TableCell colSpan={2}>
               <b>Mother Name: </b>
-              {student.MotherName}
+              {editMode ?
+                <TextField type="text" name="MotherName" size="small" variant="outlined" onChange={handleChange} value={editData.MotherName} /> :
+                <>{student.MotherName}</>
+              }
             </TableCell>
           </TableRow>
 
           <TableRow>
             <TableCell>
               <b>House Name: </b>
-              {student.HouseName}
+              {editMode ?
+                <TextField type="text" name="HouseName" size="small" variant="outlined" onChange={handleChange} value={editData.HouseName} /> :
+                <>{student.HouseName}</>
+              }
             </TableCell>
             <TableCell>
               <b>Post Office: </b>
-              {student.PostOffice}
+              {editMode ?
+                <TextField type="text" name="PostOffice" size="small" variant="outlined" onChange={handleChange} value={editData.PostOffice} /> :
+                <>{student.PostOffice}</>
+              }
             </TableCell>
           </TableRow>
 
           <TableRow>
             <TableCell>
               <b>Panchayath: </b>
-              {student.Panchayath}
+              {editMode ?
+                <Select
+                  size="small"
+                  value={editData.Panchayath}
+                  onChange={handleChange}
+                  name="Panchayath"
+                >
+                  {panchayatOptions.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>{option.label}</MenuItem>
+                  ))}
+                </Select> :
+                <> {student.Panchayath}</>
+              }
             </TableCell>
             <TableCell>
               <b>Ward: </b>
-              {student.Ward}
+              {editMode ?
+                <TextField type="text" name="Ward" size="small" variant="outlined" onChange={handleChange} value={editData.Ward} /> :
+                <> {student.Ward}</>
+              }
             </TableCell>
           </TableRow>
         </TableBody>
@@ -374,7 +435,7 @@ function StudentDetails({ data, isManagement }) {
                 </Select>
               </TableCell>
               <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-              <Select
+                <Select
                   size="small"
                   value={editData.Language2}
                   onChange={handleChange}
@@ -386,7 +447,7 @@ function StudentDetails({ data, isManagement }) {
                 </Select>
               </TableCell>
               <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-              <Select
+                <Select
                   size="small"
                   value={editData.English}
                   onChange={handleChange}
@@ -398,7 +459,7 @@ function StudentDetails({ data, isManagement }) {
                 </Select>
               </TableCell>
               <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-              <Select
+                <Select
                   size="small"
                   value={editData.Hindi}
                   onChange={handleChange}
@@ -410,7 +471,7 @@ function StudentDetails({ data, isManagement }) {
                 </Select>
               </TableCell>
               <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-              <Select
+                <Select
                   size="small"
                   value={editData.SocialScience}
                   onChange={handleChange}
@@ -422,7 +483,7 @@ function StudentDetails({ data, isManagement }) {
                 </Select>
               </TableCell>
               <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-              <Select
+                <Select
                   size="small"
                   value={editData.Physics}
                   onChange={handleChange}
@@ -434,7 +495,7 @@ function StudentDetails({ data, isManagement }) {
                 </Select>
               </TableCell>
               <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-              <Select
+                <Select
                   size="small"
                   value={editData.Chemistry}
                   onChange={handleChange}
@@ -446,7 +507,7 @@ function StudentDetails({ data, isManagement }) {
                 </Select>
               </TableCell>
               <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-              <Select
+                <Select
                   size="small"
                   value={editData.Biology}
                   onChange={handleChange}
@@ -458,7 +519,7 @@ function StudentDetails({ data, isManagement }) {
                 </Select>
               </TableCell>
               <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-              <Select
+                <Select
                   size="small"
                   value={editData.Maths}
                   onChange={handleChange}
@@ -470,7 +531,7 @@ function StudentDetails({ data, isManagement }) {
                 </Select>
               </TableCell>
               <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-              <Select
+                <Select
                   size="small"
                   value={editData.IT}
                   onChange={handleChange}
@@ -603,7 +664,7 @@ function StudentDetails({ data, isManagement }) {
                   name="Science"
                 >
                   {cbseGradesOptions.map((option) => (
-                    <MenuItem key={option.value}  value={option.value}>{option.label}</MenuItem>
+                    <MenuItem key={option.value} value={option.value}>{option.label}</MenuItem>
                   ))}
                 </Select>
               </TableCell>
@@ -636,7 +697,20 @@ function StudentDetails({ data, isManagement }) {
               <b>1</b>
             </TableCell>
             <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-              {student.coursePreference1}
+            {editMode ?
+                <Select
+                  size="small"
+                  value={editData.coursePreference1}
+                  onChange={handleChange}
+                  name="coursePreference1"
+                  fullWidth
+                >
+                  {courseOptions.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>{option.label}</MenuItem>
+                  ))}
+                </Select> :
+                <>{student.coursePreference1}</>
+              }
             </TableCell>
           </TableRow>
 
@@ -645,7 +719,20 @@ function StudentDetails({ data, isManagement }) {
               <b>2</b>
             </TableCell>
             <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-              {student.coursePreference2}
+            {editMode ?
+                <Select
+                  size="small"
+                  value={editData.coursePreference2}
+                  onChange={handleChange}
+                  name="coursePreference2"
+                  fullWidth
+                >
+                  {courseOptions.filter((option) => option.value !== editData.coursePreference1).map((option) => (
+                    <MenuItem key={option.value} value={option.value}>{option.label}</MenuItem>
+                  ))}
+                </Select> :
+                <>{student.coursePreference2}</>
+              }
             </TableCell>
           </TableRow>
         </TableBody>
@@ -658,7 +745,7 @@ function StudentDetails({ data, isManagement }) {
                 <TableCell>
                   <b>
                     Whether the applicant is eligible for bonus points under the
-                    following category :
+                    following category : &nbsp;
                   </b>
                   {student.ExtraCurricular}
                 </TableCell>
@@ -671,7 +758,7 @@ function StudentDetails({ data, isManagement }) {
               <TableRow>
                 <TableCell>
                   <b>
-                    State Level Participation(Number of items participated) :
+                    State Level Participation(Number of items participated) : &nbsp;
                   </b>
                   {student.SportsStateLevel}
                 </TableCell>
@@ -727,7 +814,7 @@ function StudentDetails({ data, isManagement }) {
               <TableRow>
                 <TableCell>
                   <b>
-                    State Level Participation(Number of items participated) :{" "}
+                    State Level Participation(Number of items participated) :&nbsp;
                   </b>
                   {student.KalotsavamStateLevel}
                 </TableCell>
@@ -779,7 +866,7 @@ function StudentDetails({ data, isManagement }) {
                 <TableCell>
                   <b>
                     Whether qualified in the National/State Level Test for the
-                    National Talent Search Examination :
+                    National Talent Search Examination : &nbsp;
                   </b>
                   {student.NationalOrStateLevelExamination}
                 </TableCell>

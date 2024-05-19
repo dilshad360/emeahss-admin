@@ -62,3 +62,30 @@ export const cbseGradesOptions = [
   { value: '4', label: 'D1' },
   { value: ' ', label: 'None' },
 ];
+
+//panchayat
+export const panchayatOptions = [
+  { value: 'Kondotty', label: 'Kondotty' },
+  { value: 'Pulikkal', label: 'Pulikkal' },
+  { value: 'Cherukavu', label: 'Cherukavu' },
+  { value: 'Kuzhimanna', label: 'Kuzhimanna' },
+  { value: 'Muthuvallur', label: 'Muthuvallur' },
+  { value: 'Cheekode', label: 'Cheekode' },
+  { value: 'Pallikkal', label: 'Pallikkal' },
+  { value: 'Morayur', label: 'Morayur' },
+  { value: 'Vazhakad', label: 'Vazhakad' },
+  { value: 'Vazhayur', label: 'Vazhayur' },
+  { value: 'Thenhipalam', label: 'Thenhipalam' },
+  { value: 'Chelembra', label: 'Chelembra' },
+  { value: 'Peruvallur', label: 'Peruvallur' },
+  { value: 'Pookottur', label: 'Pookottur' },
+  { value: 'Other', label: 'Other' },
+]
+
+
+export const courseOptions = [
+  { value: '1 - Physics, Chemistry, Biology,Mathematics', label: '1 - Physics, Chemistry, Biology,Mathematics' },
+  { value: '11 - History, Economics, Political Science, Sociology', label: '11 - History, Economics, Political Science, Sociology' },
+  { value: '35 - Journalism, English Literature, Communicative English, Psychology', label: '35 - Journalism, English Literature, Communicative English, Psychology' },
+  { value: '37 - Business Studies, Accountancy, Economics,Statistics', label: '37 - Business Studies, Accountancy, Economics,Statistics' }
+]
