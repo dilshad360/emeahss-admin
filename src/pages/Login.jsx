@@ -11,7 +11,7 @@ function Login() {
   const { isAuthenticated, isLoading } = useAuth0();
 
   if (isAuthenticated) {
-    return <Navigate to="/dashboard" replace={true} />
+    return <Navigate to="/search" replace={true} />
   }
 
   if (isLoading) {

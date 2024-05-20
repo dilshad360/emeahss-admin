@@ -21,7 +21,8 @@ import StudentDetails from "../components/StudentDetails";
 import WarningAlert from "../components/alerts/WarningAlert";
 import SuccessAlert from "../components/alerts/SuccessAlert";
 
-function Dashboard() {
+function Search() {
+
   const [applicationNo, setApplicationNo] = useState("");
   const [studentDetails, setStudentDetails] = useState({});
   const [selectedNominee, setSelectedNominee] = useState("");
@@ -84,7 +85,6 @@ function Dashboard() {
       AppNo: "",
     };
 
-    console.log(paymentStatus);
     try {
       if (isManagementQuota) {
         const response = await axios.patch(
@@ -144,7 +144,7 @@ function Dashboard() {
         <Box className="w-11/12 my-5 md:w-5/6">
           <Paper className="p-4">
             <div className="flex items-center justify-center gap-2 flex-col pb-4">
-              <h3 className="font-bold text-3xl">Search Application</h3>
+              <h3 className="font-bold text-3xl">Search {isManagementQuota ? "Management" : "Community"} Application</h3>
               <ToggleButtonGroup
                 color="primary"
                 value={isManagementQuota}
@@ -262,4 +262,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default Search;

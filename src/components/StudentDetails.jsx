@@ -12,6 +12,7 @@ import {
   Select,
   MenuItem,
   FormHelperText,
+  Tooltip,
 } from "@mui/material";
 
 import EditIcon from "@mui/icons-material/Edit";
@@ -114,22 +115,30 @@ function StudentDetails({ data, isManagement }) {
           <TableRow>
             <TableCell colSpan={2} className="py-3 bg-slate-100 rounded-md">
               <div className="flex justify-between items-center">
-                <Typography variant="" className="font-semibold text-3xl px-2">
+                <Typography variant="" className="font-semibold text-sm md:text-3xl px-2">
                   Student&apos;s Details  <span className="text-blue-700">{student.AppNo}</span>
                 </Typography>
 
                 {editMode ?
                   <div className="space-x-2" >
+                    <Tooltip title="Cancel">
                     <Button variant="outlined" onClick={() => { setEditMode(false); setEditData(data[0]); setStudent(data[0]) }} >
                       <ClearIcon />
                     </Button>
+                    </Tooltip>
+                    <Tooltip title="Save">
                     <Button color="success" variant="contained" onClick={handleSubmit} >
                       <SaveIcon />
                     </Button>
+                    </Tooltip>
                   </div>
-                  : <Button variant="outlined" onClick={() => { setEditMode(true) }} >
+                    :
+                    <Tooltip title="Edit">
+                  <Button variant="outlined" onClick={() => { setEditMode(true) }} >
                     <EditIcon />
-                  </Button>}
+                  </Button>
+                    </Tooltip>
+                  }
 
               </div>
             </TableCell>
@@ -366,7 +375,7 @@ function StudentDetails({ data, isManagement }) {
             borderTop: "1px solid #d8dceb",
             borderBottom: "1px solid #d8dceb",
           }}
-        >
+        > 
           <TableBody>
             <TableRow>
               <TableCell

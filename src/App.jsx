@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import Login from "./pages/Login";
-import Dashboard from "./pages/Dashboard";
+import Search from "./pages/Search";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "./theme";
 import PrivateRoutes from "./utils/PrivateRoutes";
@@ -11,7 +11,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route element={<PrivateRoutes />}>
-          <Route path="/dashboard" element={<Dashboard />} exact />
+          <Route path="/search" element={<Search />} exact />
         </Route>
       </Routes>
     </ThemeProvider>
