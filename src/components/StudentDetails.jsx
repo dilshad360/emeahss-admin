@@ -12,7 +12,6 @@ import {
   Select,
   MenuItem,
   FormHelperText,
-  Autocomplete,
 } from "@mui/material";
 
 import EditIcon from "@mui/icons-material/Edit";
@@ -285,7 +284,7 @@ function StudentDetails({ data, isManagement }) {
               <div className="flex gap-1">
                 <b>School Name: </b>
                 {editMode ?
-                <TextField type="text" name="SchoolName" size="small" variant="outlined" className="w-2/4" onChange={handleChange} value={editData.SchoolName} /> 
+                  <TextField type="text" name="SchoolName" size="small" variant="outlined" className="w-2/4" onChange={handleChange} value={editData.SchoolName} />
                   :
                   <>
                     {student.SchoolName}
@@ -697,7 +696,7 @@ function StudentDetails({ data, isManagement }) {
               <b>1</b>
             </TableCell>
             <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-            {editMode ?
+              {editMode ?
                 <Select
                   size="small"
                   value={editData.coursePreference1}
@@ -719,7 +718,7 @@ function StudentDetails({ data, isManagement }) {
               <b>2</b>
             </TableCell>
             <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-            {editMode ?
+              {editMode ?
                 <Select
                   size="small"
                   value={editData.coursePreference2}
@@ -747,7 +746,11 @@ function StudentDetails({ data, isManagement }) {
                     Whether the applicant is eligible for bonus points under the
                     following category : &nbsp;
                   </b>
-                  {student.ExtraCurricular}
+                  {editMode ?
+                    <TextField type="text" name="ExtraCurricular" size="small" variant="outlined" onChange={handleChange} value={editData.ExtraCurricular} /> :
+                    <> {student.ExtraCurricular}</>
+                  }
+
                 </TableCell>
               </TableRow>
               <TableRow>
@@ -760,7 +763,10 @@ function StudentDetails({ data, isManagement }) {
                   <b>
                     State Level Participation(Number of items participated) : &nbsp;
                   </b>
-                  {student.SportsStateLevel}
+                  {editMode ?
+                    <TextField type="number" name="SportsStateLevel" size="small" variant="outlined" onChange={handleChange} value={editData.SportsStateLevel} /> :
+                    <> {student.SportsStateLevel}</>
+                  }
                 </TableCell>
               </TableRow>
               <TableRow>
@@ -790,16 +796,29 @@ function StudentDetails({ data, isManagement }) {
               </TableRow>
               <TableRow>
                 <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-                  {student.SportsDistrictA}
+                  {editMode ?
+                    <TextField type="number" name="SportsDistrictA" size="small" variant="outlined" onChange={handleChange} value={editData.SportsDistrictA} /> :
+                    <>{student.SportsDistrictA}</>
+                  }
+
                 </TableCell>
                 <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-                  {student.SportsDistrictB}
+                  {editMode ?
+                    <TextField type="number" name="SportsDistrictB" size="small" variant="outlined" onChange={handleChange} value={editData.SportsDistrictB} /> :
+                    <>{student.SportsDistrictB}</>
+                  }
                 </TableCell>
                 <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-                  {student.SportsDistrictC}
+                  {editMode ?
+                    <TextField type="number" name="SportsDistrictC" size="small" variant="outlined" onChange={handleChange} value={editData.SportsDistrictC} /> :
+                    <>{student.SportsDistrictC}</>
+                  }
                 </TableCell>
                 <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-                  {student.SportsDistrictParticipation}
+                  {editMode ?
+                    <TextField type="number" name="SportsDistrictParticipation" size="small" variant="outlined" onChange={handleChange} value={editData.SportsDistrictParticipation} /> :
+                    <>{student.SportsDistrictParticipation}</>
+                  }
                 </TableCell>
               </TableRow>
             </TableBody>
@@ -816,7 +835,10 @@ function StudentDetails({ data, isManagement }) {
                   <b>
                     State Level Participation(Number of items participated) :&nbsp;
                   </b>
-                  {student.KalotsavamStateLevel}
+                  {editMode ?
+                    <TextField type="number" name="KalotsavamStateLevel" size="small" variant="outlined" onChange={handleChange} value={editData.KalotsavamStateLevel} /> :
+                    <>{student.KalotsavamStateLevel}</>
+                  }
                 </TableCell>
               </TableRow>
               <TableRow>
@@ -846,16 +868,28 @@ function StudentDetails({ data, isManagement }) {
               </TableRow>
               <TableRow>
                 <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-                  {student.ArtsDistrictA}
+                  {editMode ?
+                    <TextField type="number" name="ArtsDistrictA" size="small" variant="outlined" onChange={handleChange} value={editData.ArtsDistrictA} /> :
+                    <>{student.ArtsDistrictA}</>
+                  }
                 </TableCell>
                 <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-                  {student.ArtsDistrictB}
+                  {editMode ?
+                    <TextField type="number" name="ArtsDistrictB" size="small" variant="outlined" onChange={handleChange} value={editData.ArtsDistrictB} /> :
+                    <>{student.ArtsDistrictB}</>
+                  }
                 </TableCell>
                 <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-                  {student.ArtsDistrictC}
+                  {editMode ?
+                    <TextField type="number" name="ArtsDistrictC" size="small" variant="outlined" onChange={handleChange} value={editData.ArtsDistrictC} /> :
+                    <>{student.ArtsDistrictC}</>
+                  }
                 </TableCell>
                 <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-                  {student.ArtsDistrictParticipation}
+                  {editMode ?
+                    <TextField type="number" name="ArtsDistrictParticipation" size="small" variant="outlined" onChange={handleChange} value={editData.ArtsDistrictParticipation} /> :
+                    <>{student.ArtsDistrictParticipation}</>
+                  }
                 </TableCell>
               </TableRow>
             </TableBody>
@@ -868,7 +902,10 @@ function StudentDetails({ data, isManagement }) {
                     Whether qualified in the National/State Level Test for the
                     National Talent Search Examination : &nbsp;
                   </b>
-                  {student.NationalOrStateLevelExamination}
+                  {editMode ?
+                    <TextField type="text" name="NationalOrStateLevelExamination" size="small" variant="outlined" onChange={handleChange} value={editData.NationalOrStateLevelExamination} /> :
+                    <>{student.NationalOrStateLevelExamination}</>
+                  }
                 </TableCell>
               </TableRow>
               <TableRow>
@@ -906,114 +943,111 @@ function StudentDetails({ data, isManagement }) {
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell
-                  sx={{ backgroundColor: "#d8dceb", borderColor: "#b6b8bf" }}
-                >
+                <TableCell sx={{ backgroundColor: "#d8dceb", borderColor: "#b6b8bf" }}>
                   State Science Fair
                 </TableCell>
-                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-                  {student.StateScienceFairA}
-                </TableCell>
-                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-                  {student.StateScienceFairB}
-                </TableCell>
-                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-                  {student.StateScienceFairC}
-                </TableCell>
-                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-                  {student.StateScienceFairD}
-                </TableCell>
-                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-                  {student.StateScienceFairE}
-                </TableCell>
+                {["A", "B", "C", "D", "E"].map((letter) => (
+                  <TableCell key={`StateScienceFair${letter}`} sx={{ borderRight: "1px solid #d8dceb" }}>
+                    {editMode ? (
+                      <TextField
+                        type="number"
+                        name={`StateScienceFair${letter}`}
+                        size="small"
+                        variant="outlined"
+                        onChange={handleChange}
+                        value={editData[`StateScienceFair${letter}`] || ""}
+                      />
+                    ) : (
+                      <>{student[`StateScienceFair${letter}`] || "-"}</>
+                    )}
+                  </TableCell>
+                ))}
               </TableRow>
               <TableRow>
-                <TableCell
-                  sx={{ backgroundColor: "#d8dceb", borderColor: "#b6b8bf" }}
-                >
-                  State Social Science Fair
+                <TableCell sx={{ backgroundColor: "#d8dceb", borderColor: "#b6b8bf" }}>
+                  State Social Fair
                 </TableCell>
-                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-                  {student.StateSocialFairA}
-                </TableCell>
-                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-                  {student.StateSocialFairB}
-                </TableCell>
-                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-                  {student.StateSocialFairC}
-                </TableCell>
-                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-                  {student.StateSocialFairD}
-                </TableCell>
-                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-                  {student.StateSocialFairE}
-                </TableCell>
+                {["A", "B", "C", "D", "E"].map((letter) => (
+                  <TableCell key={`StateSocialFair${letter}`} sx={{ borderRight: "1px solid #d8dceb" }}>
+                    {editMode ? (
+                      <TextField
+                        type="number"
+                        name={`StateSocialFair${letter}`}
+                        size="small"
+                        variant="outlined"
+                        onChange={handleChange}
+                        value={editData[`StateSocialFair${letter}`] || ""}
+                      />
+                    ) : (
+                      <>{student[`StateSocialFair${letter}`] || "-"}</>
+                    )}
+                  </TableCell>
+                ))}
               </TableRow>
+
               <TableRow>
-                <TableCell
-                  sx={{ backgroundColor: "#d8dceb", borderColor: "#b6b8bf" }}
-                >
+                <TableCell sx={{ backgroundColor: "#d8dceb", borderColor: "#b6b8bf" }}>
                   State Maths Fair
                 </TableCell>
-                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-                  {student.StateMathsFairA}
-                </TableCell>
-                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-                  {student.StateMathsFairB}
-                </TableCell>
-                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-                  {student.StateMathsFairC}
-                </TableCell>
-                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-                  {student.StateMathsFairD}
-                </TableCell>
-                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-                  {student.StateMathsFairE}
-                </TableCell>
+                {["A", "B", "C", "D", "E"].map((letter) => (
+                  <TableCell key={`StateMathsFair${letter}`} sx={{ borderRight: "1px solid #d8dceb" }}>
+                    {editMode ? (
+                      <TextField
+                        type="number"
+                        name={`StateMathsFair${letter}`}
+                        size="small"
+                        variant="outlined"
+                        onChange={handleChange}
+                        value={editData[`StateMathsFair${letter}`] || ""}
+                      />
+                    ) : (
+                      <>{student[`StateMathsFair${letter}`] || "-"}</>
+                    )}
+                  </TableCell>
+                ))}
               </TableRow>
+
               <TableRow>
-                <TableCell
-                  sx={{ backgroundColor: "#d8dceb", borderColor: "#b6b8bf" }}
-                >
+                <TableCell sx={{ backgroundColor: "#d8dceb", borderColor: "#b6b8bf" }}>
                   State IT Fest
                 </TableCell>
-                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-                  {student.StateITFestA}
-                </TableCell>
-                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-                  {student.StateITFestB}
-                </TableCell>
-                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-                  {student.StateITFestC}
-                </TableCell>
-                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-                  {student.StateITFestD}
-                </TableCell>
-                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-                  {student.StateITFestE}
-                </TableCell>
+                {["A", "B", "C", "D", "E"].map((letter) => (
+                  <TableCell key={`StateITFest${letter}`} sx={{ borderRight: "1px solid #d8dceb" }}>
+                    {editMode ? (
+                      <TextField
+                        type="number"
+                        name={`StateITFest${letter}`}
+                        size="small"
+                        variant="outlined"
+                        onChange={handleChange}
+                        value={editData[`StateITFest${letter}`] || ""}
+                      />
+                    ) : (
+                      <>{student[`StateITFest${letter}`] || "-"}</>
+                    )}
+                  </TableCell>
+                ))}
               </TableRow>
               <TableRow>
-                <TableCell
-                  sx={{ backgroundColor: "#d8dceb", borderColor: "#b6b8bf" }}
-                >
-                  State Work Experiece Fair
+                <TableCell sx={{ backgroundColor: "#d8dceb", borderColor: "#b6b8bf" }}>
+                  State Work Experience Fair
                 </TableCell>
-                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-                  {student.StateWorkExperienceFairA}
-                </TableCell>
-                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-                  {student.StateWorkExperienceFairB}
-                </TableCell>
-                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-                  {student.StateWorkExperienceFairC}
-                </TableCell>
-                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-                  {student.StateWorkExperienceFairD}
-                </TableCell>
-                <TableCell sx={{ borderRight: "1px solid #d8dceb" }}>
-                  {student.StateWorkExperienceFairE}
-                </TableCell>
+                {["A", "B", "C", "D", "E"].map((letter) => (
+                  <TableCell key={`StateWorkExperienceFair${letter}`} sx={{ borderRight: "1px solid #d8dceb" }}>
+                    {editMode ? (
+                      <TextField
+                        type="number"
+                        name={`StateWorkExperienceFair${letter}`}
+                        size="small"
+                        variant="outlined"
+                        onChange={handleChange}
+                        value={editData[`StateWorkExperienceFair${letter}`] || ""}
+                      />
+                    ) : (
+                      <>{student[`StateWorkExperienceFair${letter}`] || "-"}</>
+                    )}
+                  </TableCell>
+                ))}
               </TableRow>
             </TableBody>
           </Table>
@@ -1026,7 +1060,10 @@ function StudentDetails({ data, isManagement }) {
               </TableRow>
               <TableRow>
                 <TableCell sx={{ paddingLeft: "50px" }}>
-                  {student.Club}
+                {editMode ?
+                    <TextField type="text" name="Club" size="small" variant="outlined" onChange={handleChange} value={editData.Club} /> :
+                    <> {student.Club}</>
+                  }
                 </TableCell>
               </TableRow>
             </TableBody>
