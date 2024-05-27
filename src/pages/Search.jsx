@@ -6,8 +6,6 @@ import {
   Button,
   Autocomplete,
   FormControl,
-  ToggleButton,
-  ToggleButtonGroup,
   Select,
   MenuItem,
   InputLabel,
@@ -27,7 +25,7 @@ function Search() {
   const [studentDetails, setStudentDetails] = useState({});
   const [selectedNominee, setSelectedNominee] = useState("");
   const [paymentStatus, setPaymentStatus] = useState("");
-  const [isManagementQuota, setIsManagementQuota] = useState(true);
+  const [isManagementQuota] = useState(true);
   
   const [openSuccessAlert, setOpenSuccessAlert] = useState(false);
   const [openWarningAlert, setOpenWarningAlert] = useState(false);
@@ -139,13 +137,13 @@ function Search() {
 
   return (
     <>
-      <NavBar />
+      <NavBar currentPage={"Search Application"} />
       <div className="min-h-screen flex flex-col items-center bg-slate-100 ">
         <Box className="w-11/12 my-5 md:w-5/6">
           <Paper className="p-4">
             <div className="flex items-center justify-center gap-2 flex-col pb-4">
               <h3 className="font-bold text-3xl">Search {isManagementQuota ? "Management" : "Community"} Application</h3>
-              <ToggleButtonGroup
+              {/* <ToggleButtonGroup
                 color="primary"
                 value={isManagementQuota}
                 exclusive
@@ -160,7 +158,7 @@ function Search() {
                 <ToggleButton value={false} size="small">
                   Community
                 </ToggleButton>
-              </ToggleButtonGroup>
+              </ToggleButtonGroup> */}
             </div>
             <div className="flex gap-3 mt-4">
               {/* Student Search Form */}

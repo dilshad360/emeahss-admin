@@ -4,6 +4,7 @@ import Search from "./pages/Search";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "./theme";
 import PrivateRoutes from "./utils/PrivateRoutes";
+import ViewAll from "./pages/ViewAll";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route element={<PrivateRoutes />}>
           <Route path="/search" element={<Search />} exact />
+          <Route path="/viewall" element={<ViewAll />} exact />
         </Route>
       </Routes>
     </ThemeProvider>

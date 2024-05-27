@@ -28,7 +28,7 @@ function Login() {
         backgroundPosition: "center",
       }}
     >
-      <Box>
+      <Box className=" w-5/6 md:w-3/12" >
         <Paper
           elevation={3}
           className="flex justify-center items-center flex-col gap-4 px-10 py-12"
