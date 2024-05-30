@@ -85,7 +85,7 @@ function Search() {
 
     try {
       if (isManagementQuota) {
-        const response = await axios.patch(
+          await axios.patch(
           `${
             import.meta.env.VITE_MANAGEMENT_QUOTA_LINK
           }/AppNo/${applicationNo}`,
@@ -97,8 +97,7 @@ function Search() {
           }
         );
         setOpenSuccessAlert(true);
-        setStudentDetails(response.data);
-        console.log(response.data);
+        setStudentDetails({});
       } else {
         const response = await axios.patch(
           `${import.meta.env.VITE_COMMUNITY_QUOTA_LINK}/AppNo/${applicationNo}`,
@@ -238,7 +237,7 @@ function Search() {
               )}
             </div>
           </Paper>
-          {!!studentDetails.length && (
+          {studentDetails.length && (
             <StudentDetails
               data={studentDetails}
               isManagement={isManagementQuota}

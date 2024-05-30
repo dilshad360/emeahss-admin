@@ -16,7 +16,7 @@ export const nomineesOptions = [
   "Akbar KM",
   "Ashique PK",
   "CP Suhail",
-  "Farook",
+  "Farook", 
 ];
 
 //gender
@@ -87,5 +87,6 @@ export const courseOptions = [
   { value: '1 - Physics, Chemistry, Biology,Mathematics', label: '1 - Physics, Chemistry, Biology,Mathematics' },
   { value: '11 - History, Economics, Political Science, Sociology', label: '11 - History, Economics, Political Science, Sociology' },
   { value: '35 - Journalism, English Literature, Communicative English, Psychology', label: '35 - Journalism, English Literature, Communicative English, Psychology' },
-  { value: '37 - Business Studies, Accountancy, Economics,Statistics', label: '37 - Business Studies, Accountancy, Economics,Statistics' }
+  { value: '37 - Business Studies, Accountancy, Economics,Statistics', label: '37 - Business Studies, Accountancy, Economics,Statistics' },
+  { value: '39 - Business Studies, Accountancy, Economics,Computer Application', label: '39 - Business Studies, Accountancy, Economics,Computer Application' }
 ]
